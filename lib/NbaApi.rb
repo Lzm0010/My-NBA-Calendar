@@ -4,6 +4,7 @@ require 'openssl'
 require 'json'
 require 'awesome_print'
 
+
 ###change url to get different api data for players & teams  etc
 url = URI("https://api-nba-v1.p.rapidapi.com/seasons/")
 
