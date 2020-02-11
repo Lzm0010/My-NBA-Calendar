@@ -1,6 +1,7 @@
 require_relative '../config/environment.rb'
 require_relative './NbaApi.rb'
 require_relative './User.rb'
+require_relative './UserTeam.rb'
 
 
 
@@ -63,6 +64,7 @@ def run
     while match_user_id
         input = nil
         while input != "6"
+            default_menu
             input = get_user_input
                 if input == "1" ## SHOW CURRENT FAVORITE TEAM(S)
                     display_favorite_teams
@@ -78,6 +80,7 @@ def run
                                 elsif input == "3" ## DELETE FAVORITE TEAM
 
                                 end 
+                        end
 
                 elsif input == "2" ## VIEW ALL TEAMS 
                     display_teams
