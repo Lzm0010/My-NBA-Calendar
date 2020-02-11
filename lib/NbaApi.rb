@@ -4,6 +4,7 @@ require 'openssl'
 require 'json'
 require 'awesome_print'
 
+
 url = URI("https://api-nba-v1.p.rapidapi.com/seasons/")
 
 http = Net::HTTP.new(url.host, url.port)
