@@ -1,4 +1,5 @@
-
+require_relative '../config/environment'
+require_relative './NbaApi.rb'
 
 
 def display_user_menu
@@ -15,7 +16,23 @@ def display_teams
     nba = NbaApiCommunicator.new
     teams_hash = nba.make_api_request_get_json("/teams/league/standard")
     nba_teams = teams_hash["api"]["teams"].select{|team| team["nbaFranchise"] == "1"}.map{|nba_team| nba_team["fullName"]}
-    ap nba_teams
+    nba_teams
+end
+
+def get_user_login
+    puts "Please enter your usename"
+    login = gets.chomp
+end
+
+def match_user_id(login)
+    if User.all.find{|u|u.user_name == login}
+        "Login successful"
+    end 
+    user_id = user.id 
+end
+
+def display_favorite_teams
+    UserTeam.all.find{|ut|ut.user_id == @user.id}
 end
 
 
@@ -26,29 +43,36 @@ def get_user_input
 end
 
 def run
-    input = nil
-    while input != "8"
-        input = get_user_input
-        if input = "1"
-            print_all_teams 
+    get_user_login
+        while User.all.find{|u|u.user_name == login}
+            puts "Login successful"
+            input = nil
+            while input != "8"
+                input = get_user_input
+                if input == "1"
+                    #show current favorite team
+                    #give option to 
+                        #1) add
+                        #2) edit
+                        #3) delete
+                elsif input == "2"
+                    display_teams
+                elsif input == "3"
 
-        elsif input = "2"
+                elsif input == "4"
 
-        elsif input = "3"
+                elsif input == "5"
 
-        elsif input = "4"
+                elsif input == "6"
 
-        elsif input = "5"
-
-        elsif input = "6"
-
-        elsif input = "7"
+                elsif input == "7"
 
 
+                end
+
+
+            end
         end
-
-
-    end
 
 end
 def display_schedule_options
@@ -63,7 +87,6 @@ end
 def display_stats_options
 
 end
-
 
 
 
