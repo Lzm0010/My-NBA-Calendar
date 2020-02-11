@@ -9,7 +9,7 @@ class CreatePlayers < ActiveRecord::Migration[6.0]
       t.string :position
       t.string :height
       t.string :weight
-      t.integer :startNba
+      t.integer :start_nba
     end
   end
 end

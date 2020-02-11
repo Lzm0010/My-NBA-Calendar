@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2020_02_11_160252) do
     t.string "position"
     t.string "height"
     t.string "weight"
-    t.integer "startNba"
+    t.integer "start_nba"
   end
 
   create_table "teams", force: :cascade do |t|
