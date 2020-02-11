@@ -32,4 +32,15 @@ ActiveRecord::Schema.define(version: 2020_02_11_160252) do
     t.string "logo"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "full_name"
+    t.string "user_name"
+    t.string "location"
+  end
+
+  create_table "userteams", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "team_id"
+  end
+
 end
