@@ -9,35 +9,13 @@ def display_user_menu
     ### 2.) Fun stats
 end
 
-def favorite_teams
-
-end
-
-def add_a_favorite_team
-
-end
-
-def edit_a_favorite_team
-
-end
-
-def team_standings
-
-
-end
 
 def display_schedule_options
 
 
 end
 
-def last_five
 
-end
-
-def next_five
-
-end
 
 def add_to_google_calendar
 
@@ -47,9 +25,7 @@ def display_stats_options
 
 end
 
-def delete_team
 
-end
 
 
 
