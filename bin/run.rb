@@ -1,7 +1,7 @@
 require_relative '../config/environment'
 
 
-
+display_user_menu
 
 #### WELCOME PROMPT
 ### ASKS If you need to sign up or login
