@@ -1,7 +1,7 @@
 require_relative '../config/environment'
 
 User.delete_all
-# UserTeam.delete_all
+UserTeam.delete_all
 Team.delete_all
 
 User.create(user_name: "Leemac33", 

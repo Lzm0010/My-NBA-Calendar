@@ -76,7 +76,6 @@ def run
         end
 
 end
-def display_schedule_options
 
 def display_schedule_options
 
