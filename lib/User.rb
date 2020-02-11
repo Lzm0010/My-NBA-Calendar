@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
     has_many :teams, through: :userteams
 
     def favorite_teams
-    
+        
     end
     
     def add_a_favorite_team
