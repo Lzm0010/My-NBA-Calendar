@@ -3,11 +3,6 @@ require_relative '../config/environment'
 
 display_user_menu
 
-nba = NbaApiCommunicator.new
-
-seasons = nba.make_api_request_get_json("seasons/")
-
-
 
 #### WELCOME PROMPT
 ### ASKS If you need to sign up or login
