@@ -14,6 +14,7 @@ def display_user_menu
     ### 3.) Add next 5 to my Google Calendar
     ### 6.1.) Team Leaders
     ### 2.) Fun stats
+    display_teams
 end
 
 def display_teams
@@ -94,9 +95,13 @@ def run
         end  
     end
 end
+<<<<<<< HEAD
 
 def display_schedule_options
+=======
+>>>>>>> d742de2556b955283f572fca831e2996304c2979
 
+def display_schedule_options
 
 end
 
