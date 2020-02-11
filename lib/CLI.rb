@@ -15,8 +15,6 @@ def display_schedule_options
 
 end
 
-
-
 def add_to_google_calendar
 
 end
