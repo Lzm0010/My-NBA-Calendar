@@ -1,6 +1,6 @@
 class Team < ActiveRecord::Base
-    has_many :userteams
-    has_many :users, through: :userteams
+    has_many :user_teams
+    has_many :users, through: :user_teams
 
     def team_standings
 

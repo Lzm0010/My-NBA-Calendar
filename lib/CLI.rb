@@ -1,14 +1,68 @@
 require_relative '../config/environment.rb'
-require_relative './NbaApi.rb'
-require_relative './User.rb'
-require_relative './UserTeam.rb'
+
+### WELCOME METHOD ###
+
+def welcome
+    puts "Welcome to My NBA Calendar."
+    puts "1. Login\n2. Sign up"
+    input = gets.chomp
+    if input == "1"
+        login_path
+    elsif input == "2"
+        sign_up_path
+    else
+        try_again_path
+    end
+end
+
+### USER PATH METHODS ###
+
+def login_path
+    puts "Enter username: "
+    username = gets.chomp
+    user = User.find_by(user_name: username)
+    if user
+        display_user_menu(user)
+    else
+        try_again_path
+    end
+end
+
+def sign_up_path
+    puts "Enter a username:"
+    user_name = gets.chomp
+    puts "Enter your full name:"
+    full_name = gets.chomp
+    puts "Enter your city:"
+    city = gets.chomp
+    user = User.create(user_name:user_name, 
+                full_name:full_name, 
+                location:city)
+    display_user_menu(user)
+end
+
+def try_again_path
+    puts "Not a valid input, please try again."
+    welcome
+end
 
 
+### DISPLAY INFO 
 
-
-def display_user_menu
+def display_user_menu(user)
     puts "Please choose one of the following:"
     puts "1. Favorite Teams\n2. Add a Favorite Team\n3. Edit Favorite Team\n4. Team Standings\n5. Schedule\n6. Stats\n7. Delete a Favorite Team\n8. Exit"
+    choice = gets.chomp
+    case choice
+    when "1"
+        ap user.teams
+    when "2"
+
+    when "3"
+        
+    else
+        
+    end
     ### 5.1.) Last 5
     ### 2.) Next 5
     ### 3.) Add next 5 to my Google Calendar
@@ -18,10 +72,8 @@ def display_user_menu
 end
 
 def display_teams
-    nba = NbaApiCommunicator.new
-    teams_hash = nba.make_api_request_get_json("/teams/league/standard")
-    nba_teams = teams_hash["api"]["teams"].select{|team| team["nbaFranchise"] == "1"}.map{|nba_team| nba_team["fullName"]}
-    nba_teams
+    all_teams = Team.all.map{|team| team.name }
+    ap all_teams
 end
 
 def get_user_login
@@ -95,11 +147,6 @@ def run
         end  
     end
 end
-<<<<<<< HEAD
-
-def display_schedule_options
-=======
->>>>>>> d742de2556b955283f572fca831e2996304c2979
 
 def display_schedule_options
 
@@ -114,7 +161,7 @@ def display_stats_options
 end
 
 
-run
+
 
 
 

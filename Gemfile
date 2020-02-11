@@ -7,3 +7,4 @@ gem "require_all"
 gem 'awesome_print'
 gem 'json'
 gem 'openssl'
+gem 'dotenv'

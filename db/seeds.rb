@@ -17,7 +17,7 @@ User.create(user_name: "Kobe824",
 
 nba = NbaApiCommunicator.new
 teams_hash = nba.make_api_request_get_json("/teams/league/standard")
-nba_teams = teams_hash["api"]["teams"].select{|team| team["nbaFranchise"] == "1"}#.map{|nba_team| nba_team["fullName"]}
+nba_teams = teams_hash["api"]["teams"].select{|team| team["nbaFranchise"] == "1"}
 nba_teams.each do |team|
     Team.create(name: team["fullName"], 
                 city: team["city"], 

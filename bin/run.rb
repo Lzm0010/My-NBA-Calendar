@@ -1,8 +1,9 @@
 require_relative '../config/environment'
 
 
-# display_user_menu
-display_teams
+welcome
+
+
 
 
 #### WELCOME PROMPT
