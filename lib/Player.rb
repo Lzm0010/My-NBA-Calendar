@@ -3,6 +3,9 @@ require 'date'
 class Player < ActiveRecord::Base
     belongs_to :team
 
+    def fun_stats
+
+    end
 
     def age_in_years
         dob = self.age.to_date

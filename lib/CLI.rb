@@ -87,10 +87,20 @@ def display_user_menu(user)
         end
 
     when 5
+        team = user.select_a_team
         choice = prompt.select("Select an option:") do |menu|
-            menu.choice '1.Team Leaders', 1
-            menu.choice '2.Fun Stats', 2
+            menu.choice '1.Team Leaders', "a"
+            menu.choice '2.Player Stats', "b"
         end
+
+        case choice
+        when "a"
+            team.leaders
+        when "b"
+            player = team.select_a_player
+            player.fun_stats
+        end
+
     when 6
         user.delete_team
     when 7
