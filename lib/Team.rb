@@ -12,4 +12,18 @@ class Team < ActiveRecord::Base
     def next_five(team_id)
     
     end
+
+    def players(team_id)
+        ## show list of teams with their matching team(api) ids
+        team_players_hash = @@nba.make_api_request_get_json("players/teamid/#{string_id}")
+
+
+
+    end
+
 end
+
+
+
+
+#hi
