@@ -23,16 +23,11 @@ class Team < ActiveRecord::Base
         end
     end
 
-<<<<<<< HEAD
-   
-
-=======
     ### HELPER METHODS
     def get_season_games
         teams_games = @@nba.make_api_request_get_json("games/teamId/#{self.api_id}")#?seasonYear=2019")
         teams_games['api']['games'].select{|game| game['seasonYear'] == "2019"}
     end
->>>>>>> 146bad13ac7c126f58d9523cd63c6a3940ac05c0
 end
 
 

@@ -45,14 +45,9 @@ nba_teams.each_with_index do |team, i|
                       number: player["leagues"]["standard"]["jersey"],
                       position: player["leagues"]["standard"]["pos"],
                       height: player["heightInMeters"].to_f,
-<<<<<<< HEAD
                       weight: "#{player['weightInKilograms'].to_f/ 0.45359237}.to_i",
                       start_nba: player["startNba"],
                       api_id: player["playerId"])
-=======
-                      weight: "#{player['weightInKilograms'].to_f/ 0.45359237}",
-                      start_nba: player["startNba"])
->>>>>>> 146bad13ac7c126f58d9523cd63c6a3940ac05c0
     end
 
 end
