@@ -4,12 +4,18 @@ class Team < ActiveRecord::Base
     
     @@nba = NbaApiCommunicator.new
 
-    def last_five(team_id)
-        @@nba.make_api_request_get_json("game/#{teamid}")
+    def select_team
 
     end
+
+    def last_five
+        teams_game = @@nba.make_api_request_get_json("game/#{self.id}")
+        ap teams_game
+    end
     
-    def next_five(team_id)
+    def next_five
     
     end
+
+
 end
