@@ -15,7 +15,14 @@ class User < ActiveRecord::Base
         UserTeam.create(user_id: self.id, team_id: team_id)
     end
 
-    def delete_team(team)
-
+    def delete_team
+        prompt = TTY::Prompt.new
+        team_id = prompt.select("Remove a team from your favorites:") do |menu|
+            self.teams.each do |team|
+                menu.choice team.name, team.id
+            end
+        end
+        ut = UserTeam.find_by(user_id: self.id, team_id: team_id)
+        ut.destroy
     end
 end

@@ -70,18 +70,21 @@ def display_user_menu(user)
     when 3
         ##get standings method
     when 4
-        ##get schedule menu
-            ### 1.) Last 5
-            ### 2.) Next 5
-            ### 3.) Add next 5 to my Google Calendar
+        choice = prompt.select("Select an option:") do |menu|
+            menu.choice '1.Last 5', 1
+            menu.choice '2.Next 5', 2
+            menu.choice '3.Add next 5 to my Google Calendar', 3
+        end
     when 5
-        ##get stats menu
-            ### 1.) Team Leaders
-            ### 2.) Fun stats
+        choice = prompt.select("Select an option:") do |menu|
+            menu.choice '1.Team Leaders', 1
+            menu.choice '2.Fun Stats', 2
+        end
     when 6
-        ##delete_a_team_method
+        user.delete_team
     when 7
-        ##exit the program
+        #exit the program
+        puts "See ya next time!"
     end
     
     
@@ -91,22 +94,10 @@ def display_all_teams
     Team.all.map{|team| puts "#{team.id}. #{team.name}" }
 end
 
-
-def get_standings
-
-end
-
-def display_schedule_options
-
-end
-
 def add_to_google_calendar
 
 end
 
-def display_stats_options
-
-end
 
 
 
