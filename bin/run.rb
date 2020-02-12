@@ -1,11 +1,42 @@
 require_relative '../config/environment'
 
-# nba = NbaApiCommunicator.new
-# east_standings_hash = nba.make_api_request_get_json("/standings/standard/2019/conference/east")
-# east_teams = east_standings_hash["api"]["standings"].select{|t|t["league"] == "standard"}
-# east_teams.each do |team|puts "Team ID: #{team["teamId"]} Rank: #{team["conference"]["rank"]}" east_standings_hash
-# west_standings_hash = nba.make_api_request_get_json("/standings/standard/2019/conference/west")
-# west_standings = standings
+
+nba = NbaApiCommunicator.new
+
+teams_hash = nba.make_api_request_get_json("/teams/league/standard")
+nba_teams = teams_hash["api"]["teams"].select{|team| team["nbaFranchise"] == "1"}
+teams_with_api_id_hash = {}
+nba_teams.each{|team|teams_with_api_id_hash[team["fullName"]] = team["teamId"]}
+
+east_standings_hash = nba.make_api_request_get_json("/standings/standard/2019/conference/east")
+east_teams = east_standings_hash["api"]["standings"].select{|t|t["league"] == "standard"}
+east_teams_ranked = {}
+east_teams.each{|team|east_teams_ranked[team["teamId"]] = team["conference"]["rank"]} #api_teamId = rank
+
+east_hash = {}
+teams_with_api_id_hash.each {|team,id| 
+    east_teams_ranked.each{|api_id,rank| 
+        if id == api_id
+            east_hash[team] = rank.to_i
+        end
+}}
+final_east_hash = east_hash.sort_by {|_key, value| value}.to_h
+
+west_standings_hash = nba.make_api_request_get_json("/standings/standard/2019/conference/west")
+west_teams = west_standings_hash["api"]["standings"].select{|t|t["league"] == "standard"}
+west_teams_ranked = {}
+west_teams.each{|team|west_teams_ranked[team["teamId"]] = team["conference"]["rank"]} #api_teamId = rank
+
+west_hash = {}
+teams_with_api_id_hash.each {|team,id| 
+    west_teams_ranked.each{|api_id,rank| 
+        if id == api_id
+            west_hash[team] = rank.to_i
+        end
+}}
+final_west_hash = west_hash.sort_by {|_key, value| value}.to_h
+
+
 
 welcome
 
