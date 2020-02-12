@@ -7,24 +7,27 @@ class Team < ActiveRecord::Base
 
     def last_five
         today = Time.now.utc
-        teams_games = @@nba.make_api_request_get_json("games/teamId/#{self.api_id}")#?seasonYear=2019")
-        current_season = teams_games['api']['games'].select{|game| game['seasonYear'] == "2019"}
-        previous_five_games = current_season.select{|game| game["startTimeUTC"] < today}.last(5)
+        current_season_games = self.get_season_games
+        previous_five_games = current_season_games.select{|game| game["startTimeUTC"] < today}.last(5)
         previous_five_games.each do |game|
             ap "#{game["vTeam"]["fullName"]} #{game["vTeam"]['score']["points"]} - #{game["hTeam"]["fullName"]} #{game["hTeam"]['score']["points"]}"
         end
     end
     
     def next_five
-    
+        today = Time.now.utc
+        current_season_games = self.get_season_games
+        next_five_games = current_season_games.select{|game| game["startTimeUTC"] > today}.first(5)
+        next_five_games.each do |game|
+            ap "#{game["vTeam"]["fullName"]} @ #{game["hTeam"]["fullName"]} #{game['startTimeUTC'].to_datetime.localtime("-05:00").strftime("%m/%d/%Y %I:%M %p")}"
+        end
     end
 
-    def players(team_id)
-        ## show list of teams with their matching team(api) ids
-        team_players_hash = @@nba.make_api_request_get_json("players/teamid/#{string_id}")
-
+    ### HELPER METHODS
+    def get_season_games
+        teams_games = @@nba.make_api_request_get_json("games/teamId/#{self.api_id}")#?seasonYear=2019")
+        teams_games['api']['games'].select{|game| game['seasonYear'] == "2019"}
     end
-
 end
 
 

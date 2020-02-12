@@ -32,11 +32,11 @@ nba_teams.each_with_index do |team, i|
     ### CREATE PLAYERS FOR TEAM ###
     
     players_hash = nba.make_api_request_get_json("players/teamId/#{team["teamId"]}")
-    active_players = players_hash["api"]["players"].select{|player| 
-    if player["leagues"]["standard"] != nil
-        player["leagues"]["standard"]["active"] == "1"
+    active_players = players_hash["api"]["players"].select do |player| 
+        if player["leagues"]["standard"] != nil
+            player["leagues"]["standard"]["active"] == "1"
+        end
     end
-    }
     active_players.each do |player| 
         Player.create(name: "#{player['firstName']} #{player['lastName']}",
                       college: player["collegeName"],
@@ -45,14 +45,11 @@ nba_teams.each_with_index do |team, i|
                       number: player["leagues"]["standard"]["jersey"],
                       position: player["leagues"]["standard"]["pos"],
                       height: player["heightInMeters"].to_f,
-                      weight: "#{player['weightInKilograms'].to_f/ 0.45359237} lbs",
+                      weight: "#{player['weightInKilograms'].to_f/ 0.45359237}",
                       start_nba: player["startNba"])
     end
 
 end
-
-
-
 
 
 ### CREATE USER TEAMS ###
