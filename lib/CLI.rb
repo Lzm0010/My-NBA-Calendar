@@ -70,11 +70,22 @@ def display_user_menu(user)
     when 3
         display_standings
     when 4
+        Team.select_team
         choice = prompt.select("Select an option:") do |menu|
-            menu.choice '1.Last 5', 1
-            menu.choice '2.Next 5', 2
-            menu.choice '3.Add next 5 to my Google Calendar', 3
+            menu.choice '1.Last 5', "a"
+            menu.choice '2.Next 5', "b"
+            menu.choice '3.Add next 5 to my Google Calendar', "c"
         end
+
+        case choice
+        when "a"
+            team.last_five
+        when "b"
+            team.next_five
+        when "c"
+            ### add google calendar method
+        end
+
     when 5
         choice = prompt.select("Select an option:") do |menu|
             menu.choice '1.Team Leaders', 1

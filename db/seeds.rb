@@ -4,6 +4,8 @@ User.delete_all
 UserTeam.delete_all
 Team.delete_all
 
+### CREATE USERS ###
+
 User.create(user_name: "Leemac33", 
             full_name: "Lee McCormick",
             location: "Charlotte")
@@ -14,6 +16,7 @@ User.create(user_name: "Kobe824",
             full_name: "Kobe Bryant",
             location: "Los Angeles")
 
+### CREATE TEAMS ###
 
 nba = NbaApiCommunicator.new
 teams_hash = nba.make_api_request_get_json("/teams/league/standard")
@@ -26,10 +29,7 @@ nba_teams.each do |team|
                 logo: team['logo'])
 end
 
-#standings
-standings_hash = nba.make_api_request_get_json("/standings/standard/2019")
-standings = standings_hash["api"]
-
+### CREATE USER TEAMS ###
 
 UserTeam.create(user_id: 1, team_id: 11)
 UserTeam.create(user_id: 2, team_id: 23)
