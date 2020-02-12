@@ -1,6 +1,9 @@
 class Player < ActiveRecord::Base
     belongs_to :team
 
+    def fun_stats
+
+    end
 
     def age_calculated
        

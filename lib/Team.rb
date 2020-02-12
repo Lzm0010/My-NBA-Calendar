@@ -4,6 +4,12 @@ class Team < ActiveRecord::Base
     has_many :users, through: :user_teams
     
     @@nba = NbaApiCommunicator.new
+    @@prompt = TTY::Prompt.new
+
+    def select_a_player
+        player_id = self.get_player_id("Select a player:")
+        Player.find(player_id)
+    end
 
     def last_five
         today = Time.now.utc
@@ -23,11 +29,26 @@ class Team < ActiveRecord::Base
         end
     end
 
+    def leaders
+        self.players.each do |player|
+            player_stats = @@nba.make_api_request_get_json("statistics/players/playerId/#{player.api_id}")
+        end
+    end
+
     ### HELPER METHODS
     def get_season_games
         teams_games = @@nba.make_api_request_get_json("games/teamId/#{self.api_id}")#?seasonYear=2019")
         teams_games['api']['games'].select{|game| game['seasonYear'] == "2019"}
     end
+
+    def get_player_id(prompt)
+        player_id = @@prompt.select(prompt) do |menu|
+            self.players.each do |player|
+                menu.choice player.name, player.id
+            end
+        end
+        player_id
+    end 
 end
 
 
