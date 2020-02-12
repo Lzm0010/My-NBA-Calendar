@@ -10,6 +10,7 @@ players_hash = nba.make_api_request_get_json("players/teamId/#{teamid}")
 players = Player.all
 bembry = players[0] 
 
+<<<<<<< HEAD
 
 string_to_date = "1996-12-02".to_date
 binding.pry
@@ -17,5 +18,7 @@ binding.pry
 # update age to show, 
 # height to convert to feet and inches, 
 # start_nba to calculate years and months into NBA
+=======
+>>>>>>> 146bad13ac7c126f58d9523cd63c6a3940ac05c0
 
 welcome

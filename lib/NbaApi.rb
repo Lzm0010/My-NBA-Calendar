@@ -15,8 +15,8 @@ class NbaApiCommunicator
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
         request = Net::HTTP::Get.new(url)
-        request["x-rapidapi-host"] = 'api-nba-v1.p.rapidapi.com'
-        request["x-rapidapi-key"] = '9daf1f4c35mshdf9c1ef6a1e06e8p16d72bjsnfd410afab7c5'
+        request["x-rapidapi-host"] = ENV['APIHOST']
+        request["x-rapidapi-key"] = ENV['APIKEY']
 
         response = http.request(request)
         JSON.parse(response.body)
