@@ -1,13 +1,12 @@
 require_relative '../config/environment'
 
-nba = NbaApiCommunicator.new
-east_standings_hash = nba.make_api_request_get_json("/standings/standard/2019/conference/east")
-east_teams = east_standings_hash["api"]["standings"].select{|t|t["league"] == "standard"}
+# nba = NbaApiCommunicator.new
+# east_standings_hash = nba.make_api_request_get_json("/standings/standard/2019/conference/east")
+# east_teams = east_standings_hash["api"]["standings"].select{|t|t["league"] == "standard"}
 # east_teams.each do |team|puts "Team ID: #{team["teamId"]} Rank: #{team["conference"]["rank"]}" east_standings_hash
 # west_standings_hash = nba.make_api_request_get_json("/standings/standard/2019/conference/west")
 # west_standings = standings
 
-binding.pry
 welcome
 
 

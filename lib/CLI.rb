@@ -3,88 +3,94 @@ require_relative '../config/environment.rb'
 ### WELCOME METHOD ###
 
 def welcome
-    puts "Welcome to My NBA Calendar."
-    puts "1. Login\n2. Sign up"
-    input = gets.chomp
-    if input == "1"
+    prompt = TTY::Prompt.new
+    choice = prompt.select("Welcome to My NBA Calendar.") do |menu| 
+        menu.choice '1.Login', 1
+        menu.choice '2.Signup', 2
+    end
+
+    case choice
+    when 1
         login_path
-    elsif input == "2"
+    when 2
         sign_up_path
-    else
-        try_again_path
     end
 end
 
 ### USER PATH METHODS ###
 
 def login_path
-    puts "Enter username: "
-    username = gets.chomp
+    prompt = TTY::Prompt.new
+    username = prompt.ask('Enter username:') do |q|
+        q.required true
+        q.modify :trim
+    end
+
     user = User.find_by(user_name: username)
+
     if user
         display_user_menu(user)
     else
-        try_again_path
+        puts "Login Unsuccessful. No user found."
     end
 end
 
 def sign_up_path
-    puts "Enter a username:"
-    user_name = gets.chomp
-    puts "Enter your full name:"
-    full_name = gets.chomp
-    puts "Enter your city:"
-    city = gets.chomp
-    user = User.create(user_name:user_name, 
-                full_name:full_name, 
-                location:city)
+    prompt = TTY::Prompt.new
+    user_hash = prompt.collect do
+        key(:user_name).ask('Enter a username:', required: true)
+        key(:full_name).ask('Enter your full name:')
+        key(:location).ask('Enter your city:')
+    end
+    user = User.create(user_hash)
     display_user_menu(user)
 end
 
-def try_again_path
-    puts "Not a valid input, please try again."
-    welcome
-end
 
-
-### DISPLAY INFO 
+### DISPLAY MENU & METHODS
 
 def display_user_menu(user)
-    puts "Please choose one of the following:"
-    puts "1. Favorite Teams\n2. Add a Favorite Team\n3. Team Standings\n4. Schedule\n5. Stats\n6. Delete a Favorite Team\n7. Exit"
-    choice = gets.chomp
+    prompt = TTY::Prompt.new
+    choice = prompt.select("Select an option:") do |menu|
+        menu.choice '1.Favorite Teams', 1
+        menu.choice '2.Add a Favorite Team', 2
+        menu.choice '3.Team Standings', 3
+        menu.choice '4.Schedule', 4
+        menu.choice '5.Stats', 5
+        menu.choice '6.Delete a Favorite Team', 6
+        menu.choice '7.Exit', 7
+    end
+     
     case choice
-    when "1"
-        display_teams(user)
-    when "2"
-        display_teams
-        create_user_team_from_input
-    when "3"
-        ##what i worked on
-        
-    else
-        
+    when 1
+        user.display_teams
+    when 2
+        display_all_teams
+        user.add_a_favorite_team
+    when 3
+        ##get standings method
+    when 4
+        ##get schedule menu
+            ### 1.) Last 5
+            ### 2.) Next 5
+            ### 3.) Add next 5 to my Google Calendar
+    when 5
+        ##get stats menu
+            ### 1.) Team Leaders
+            ### 2.) Fun stats
+    when 6
+        ##delete_a_team_method
+    when 7
+        ##exit the program
     end
-    ### 5.1.) Last 5
-    ### 2.) Next 5
-    ### 3.) Add next 5 to my Google Calendar
-    ### 6.1.) Team Leaders
-    ### 2.) Fun stats
+    
+    
 end
 
-def display_teams(user=nil)
-    if user
-        user.teams.each{|team| puts "#{team.name}"}
-    else
-        Team.all.map{|team| puts "#{team.id}. #{team.name}" }
-    end
+def display_all_teams
+    Team.all.map{|team| puts "#{team.id}. #{team.name}" }
 end
 
-def create_user_team_from_input
-    puts "Pick a team by ID to add to your favorites:"
-    team_id = gets.chomp
-    UserTeam.create(user_id: user.id, team_id: team_id)
-end
 
 def get_standings
 
