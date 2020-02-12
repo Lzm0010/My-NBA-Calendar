@@ -70,7 +70,7 @@ def display_user_menu(user)
     when 3
         display_standings
     when 4
-        # Team.select_team
+        team = user.select_a_team
         choice = prompt.select("Select an option:") do |menu|
             menu.choice '1.Last 5', "a"
             menu.choice '2.Next 5', "b"
