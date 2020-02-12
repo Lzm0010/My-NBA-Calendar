@@ -26,6 +26,11 @@ nba_teams.each do |team|
                 logo: team['logo'])
 end
 
+#standings
+standings_hash = nba.make_api_request_get_json("/standings/standard/2019")
+standings = standings_hash["api"]
+
+
 UserTeam.create(user_id: 1, team_id: 11)
 UserTeam.create(user_id: 2, team_id: 23)
 UserTeam.create(user_id: 3, team_id: 14)
