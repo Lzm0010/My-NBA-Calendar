@@ -26,7 +26,8 @@ nba_teams.each do |team|
                 city: team["city"], 
                 conference: team["leagues"]['standard']['confName'],
                 division: team["leagues"]["standard"]["divName"],
-                logo: team['logo'])
+                logo: team['logo'],
+                api_id: team['teamId'])
 end
 
 ### CREATE USER TEAMS ###
