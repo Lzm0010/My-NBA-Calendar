@@ -11,19 +11,19 @@ class GoogleCalendar
   end
 
   def events(reload=false)
-    # NOTE: This is just for demonstration purposes and not complete.
-    # If you have more than 2500 results, you'll need to get more than    
-    # one set of results.
     @events = nil if reload
     @events ||= service.list_events(calendar_id, max_results: 2500).items
   end
 
+  def insert_event(event)
+    service.insert_event("41uih86oej4uhvbnaonesl0s3o@group.calendar.google.com", event)
+  end
 
 
 private
 
   def calendar_id
-    @calendar_id ||= "4327m6pj3svbq2j8eek3iirifs@group.calendar.google.com"
+    @calendar_id ||= "41uih86oej4uhvbnaonesl0s3o@group.calendar.google.com"
   end
 
   def authorize
