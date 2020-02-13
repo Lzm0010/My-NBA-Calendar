@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
     has_many :user_teams
     has_many :teams, through: :user_teams
 
+    @@texter = SendSMS.new
     @@my_cal = GoogleCalendar.new
     @@prompt = TTY::Prompt.new
 
@@ -70,6 +71,18 @@ class User < ActiveRecord::Base
                 @@my_cal.delete_event(event.id)
             end
         end
+    end
+    
+    def send_text(team, number)
+        body = ""
+        games = team.next_five
+                # "#{game["vTeam"]["fullName"]} @ #{game["hTeam"]["fullName"]} #{game['startTimeUTC'].to_datetime.localtime("-05:00").strftime("%m/%d/%Y %I:%M %p")}"
+        games.each do |game| 
+            body += "#{game["vTeam"]["fullName"]} @ #{game["hTeam"]["fullName"]} #{game['startTimeUTC'].to_datetime.localtime("-05:00").strftime("%m/%d/%Y %I:%M %p")}\n"
+        end
+        
+        @@texter.send_message(body,number)
+
     end
 
 
