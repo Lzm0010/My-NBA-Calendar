@@ -68,7 +68,8 @@ def display_user_menu(user)
         display_all_teams
         user.add_a_favorite_team
     when 3
-        display_standings
+        conference_standings_by_rank("east")
+        conference_standings_by_rank("west")
     when 4
         team = user.select_a_team
         choice = prompt.select("Select an option:") do |menu|
@@ -111,44 +112,85 @@ def display_user_menu(user)
     
 end
 
-def display_standings
-    nba = NbaApiCommunicator.new
+# def display_standings
+#     nba = NbaApiCommunicator.new
 
+#     teams_with_id = {}
+#     Team.all.each{|team|teams_with_id[team.name] = team.api_id.to_s}
+    
+#     east_standings_hash = nba.make_api_request_get_json("/standings/standard/2019/conference/east")
+#     east_teams = east_standings_hash["api"]["standings"].select{|t|t["league"] == "standard"}
+#     east_teams_ranked = {}
+#     east_teams.each{|team|east_teams_ranked[team["teamId"]] = team["conference"]["rank"]} #api_teamId = rank
+    
+#     east_hash = {}
+#     teams_with_id.each {|team,id| 
+#         east_teams_ranked.each{|api_id,rank| 
+#             if id == api_id
+#                 east_hash[team] = rank.to_i
+#             end
+#     }}
+#     final_east_hash = east_hash.sort_by {|_key, value| value}.to_h
+    
+#     west_standings_hash = nba.make_api_request_get_json("/standings/standard/2019/conference/west")
+#     west_teams = west_standings_hash["api"]["standings"].select{|t|t["league"] == "standard"}
+#     west_teams_ranked = {}
+#     west_teams.each{|team|west_teams_ranked[team["teamId"]] = team["conference"]["rank"]} #api_teamId = rank
+    
+#     west_hash = {}
+#     teams_with_id.each {|team,id| 
+#         west_teams_ranked.each{|api_id,rank| 
+#             if id == api_id
+#                 west_hash[team] = rank.to_i
+#             end
+#     }}
+#     final_west_hash = west_hash.sort_by {|_key, value| value}.to_h
+#     puts "WEST STANDINGS"
+#     ap final_west_hash
+#     puts "EAST STANDINGS"
+#     ap final_east_hash
+# end
+
+def conference_standings_by_rank(conf_division)
+    nba = NbaApiCommunicator.new
+    standings_hash = nba.make_api_request_get_json("/standings/standard/2019/conference/#{conf_division}")
+    teams = standings_hash["api"]["standings"].select{|t|t["league"] == "standard"}
+    teams_ranked = {}
+    teams.each{|team|teams_ranked[team["teamId"]] = team["conference"]["rank"]}
+    binding.pry
+    # "RANK: #{team['conference']['rank']} WINS: #{team['conference']['win']} LOSS: #{team['conference']['loss']}"
     teams_with_id = {}
-    Team.all.each{|team|teams_with_id[team.name] = team.api_id.to_s}
-    
-    east_standings_hash = @@nba.make_api_request_get_json("/standings/standard/2019/conference/east")
-    east_teams = east_standings_hash["api"]["standings"].select{|t|t["league"] == "standard"}
-    east_teams_ranked = {}
-    east_teams.each{|team|east_teams_ranked[team["teamId"]] = team["conference"]["rank"]} #api_teamId = rank
-    
-    east_hash = {}
+    Team.all.each{|team|teams_with_id[team.name] = team.api_id.to_s} 
+
+    team_hash = 
+
+    team_hash = {}
     teams_with_id.each {|team,id| 
-        east_teams_ranked.each{|api_id,rank| 
+        teams_ranked.each{|api_id,rank| 
             if id == api_id
-                east_hash[team] = rank.to_i
+                team_hash[team] = rank.to_i
             end
     }}
-    final_east_hash = east_hash.sort_by {|_key, value| value}.to_h
-    
-    west_standings_hash = @@nba.make_api_request_get_json("/standings/standard/2019/conference/west")
-    west_teams = west_standings_hash["api"]["standings"].select{|t|t["league"] == "standard"}
-    west_teams_ranked = {}
-    west_teams.each{|team|west_teams_ranked[team["teamId"]] = team["conference"]["rank"]} #api_teamId = rank
-    
-    west_hash = {}
-    teams_with_api_id_hash.each {|team,id| 
-        west_teams_ranked.each{|api_id,rank| 
-            if id == api_id
-                west_hash[team] = rank.to_i
-            end
-    }}
-    final_west_hash = west_hash.sort_by {|_key, value| value}.to_h
-    puts "WEST STANDINGS"
-    ap final_west_hash
-    puts "EAST STANDINGS"
-    ap final_east_hash
+    puts "#{conf_division.upcase} STANDINGS =>"
+    final_teams_hash = team_hash.sort_by {|_key, value| value}.to_h
+    ap final_teams_hash
+
+
+### everything below commented out ###
+    # ap include_wins_and_loss
+#     ### ADD WIN & LOSS
+#     # final_teams_hash.each{|team,value|
+#     # teams.each{|t| team = "R#{t['conference']['rank']}"}
+
+
+#     # }
+
+#     # final_standings = []
+#     # final_teams_hash.each {|key,value|final_standings << "#{key} - Rank #{value.to_i}"}
+#     # ap final_standings
 end
+
+
 
 def display_all_teams
     Team.all.map{|team| puts "#{team.id}. #{team.name}" }
