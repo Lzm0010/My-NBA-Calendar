@@ -82,7 +82,6 @@ class User < ActiveRecord::Base
         end
         
         @@texter.send_message(body,number)
-
     end
 
 
