@@ -30,6 +30,7 @@ class Team < ActiveRecord::Base
     end
 
     def leaders
+        filtered_player_info = []
         self.players.each do |player|
             player_stats = @@nba.make_api_request_get_json("statistics/players/playerId/#{player.api_id}")
             points = 0
@@ -40,11 +41,24 @@ class Team < ActiveRecord::Base
                 assists += game['assists'].to_i 
                 rebounds += game['totReb'].to_i
             end
-            puts "#{player.name} is averaging #{points/10.0}ppg #{assists/10.0}apg & #{rebounds/10.0}rpg"
+
+            filtered_player_info << {
+                name: player.name,
+                points: points,
+                assists: assists,
+                rebounds: rebounds
+             }
+        end
+
+        sorted_players = filtered_player_info.sort_by{|k| k[:points]}.reverse.first(10)
+
+        sorted_players.each do |player|
+            puts "#{player[:name]} is averaging #{player[:points]/10.0}ppg #{player[:assists]/10.0}apg & #{player[:rebounds]/10.0}rpg"
         end
     end
 
-    ### HELPER METHODS
+    ### HELPER METHODS ###
+
     def get_season_games
         teams_games = @@nba.make_api_request_get_json("games/teamId/#{self.api_id}")#?seasonYear=2019")
         teams_games['api']['games'].select{|game| game['seasonYear'] == "2019"}

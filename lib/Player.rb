@@ -3,8 +3,10 @@ require 'date'
 class Player < ActiveRecord::Base
     belongs_to :team
 
-    def fun_stats
+    @@nba = NbaApiCommunicator.new
 
+    def fun_stats
+        
     end
 
     def age_in_years
