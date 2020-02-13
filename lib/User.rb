@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
     has_many :user_teams
     has_many :teams, through: :user_teams
+
     @@texter = SendSMS.new
     @@my_cal = GoogleCalendar.new
     @@prompt = TTY::Prompt.new
@@ -35,6 +36,7 @@ class User < ActiveRecord::Base
             event = Google::Apis::CalendarV3::Event.new(
                 summary: "#{game["vTeam"]["fullName"]} @ #{game["hTeam"]["fullName"]}",
                 location: 'My couch in front of the TV.',
+                description: "#{team.id}",
                 start: Google::Apis::CalendarV3::EventDateTime.new(
                 date_time: "#{game['startTimeUTC']}",
                 time_zone: 'America/New_York'
@@ -63,6 +65,14 @@ class User < ActiveRecord::Base
         end
     end
 
+    def clear_calendar(team)
+        @@my_cal.events.each do |event|
+            if event.description == "#{team.id}"
+                @@my_cal.delete_event(event.id)
+            end
+        end
+    end
+    
     def send_text(team, number)
         body = ""
         games = team.next_five
@@ -72,6 +82,7 @@ class User < ActiveRecord::Base
         end
         
         @@texter.send_message(body,number)
+
     end
 
     ### HELPER METHODS ###
@@ -84,4 +95,5 @@ class User < ActiveRecord::Base
         end
         team_id
     end
+
 end
