@@ -107,6 +107,7 @@ class CommandLineInterface
             case choice
             when "a"
                 team.leaders
+                puts "TEAM LEADERS BY THE LAST 10 GAMES"
             when "b"
                 player = team.select_a_player
                 player.fun_stats

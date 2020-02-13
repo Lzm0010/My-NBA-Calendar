@@ -6,7 +6,15 @@ class Player < ActiveRecord::Base
     @@nba = NbaApiCommunicator.new
 
     def fun_stats
-        
+        puts "NAME: #{self.name}"
+        puts "TEAM: #{self.team.name}"
+        puts "POSITION: #{self.position}"
+        puts "JERSEY #: #{self.number}"
+        puts "AGE: #{self.age_in_years.to_s}"
+        puts "WEIGHT: #{self.weight} lbs"
+        puts "HEIGHT: #{self.height_in_feet_and_inches}"
+        puts "TIME IN NBA: #{self.time_in_nba.to_s} years"
+        puts "LEGENDS NEVER DIE #MAMBA MENTALITY"
     end
 
     def age_in_years
@@ -20,7 +28,7 @@ class Player < ActiveRecord::Base
         total_inches = height_in_meters * 39.37
         feet = (total_inches/12).to_i 
         remainder = ((total_inches.to_f) - (feet * 12)).to_i
-        "#{feet}ft #{remainder}inches"
+        "#{feet} ft #{remainder} inches"
     end
 
     def time_in_nba
