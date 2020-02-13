@@ -125,7 +125,6 @@ DEPENDENCIES
   pry
   rake
   require_all
-  sinatra
   sinatra-activerecord
   sqlite3
   tty-prompt

@@ -93,6 +93,10 @@ class CommandLineInterface
                 team.last_five
             when "b"
                 team.next_five
+                number = @@prompt.ask("To receive a text message with scheduled game info for this team's next 5 games \n please provide your number in this format: +12223334444") do |q|
+                    q.modify :remove
+                end
+                user.send_text(team,number)
             when "c"
                 user.schedule_events_in_my_gcal(team)
             end
