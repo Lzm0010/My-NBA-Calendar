@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
     
     def add_a_favorite_team
         team_id = @@prompt.ask("Pick a team by ID to add to your favorites:") do |q|
-            q.in '1-30'
+            q.in '1-31'
             q.messages[:range?] = "%{value} out of expected range #{q.in}"
         end
         UserTeam.create(user_id: self.id, team_id: team_id)
@@ -71,6 +71,7 @@ class User < ActiveRecord::Base
             end
         end
     end
+
 
     ### HELPER METHODS ###
 
