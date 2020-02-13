@@ -94,7 +94,7 @@ class CommandLineInterface
             when "b"
                 team.next_five
             when "c"
-                ### add google calendar method
+                user.schedule_events_in_my_gcal(team)
             end
 
         when 5
@@ -124,6 +124,12 @@ class CommandLineInterface
 
 
 
+    ### DISPLAY NBA STUFF METHODS ###
+
+    def display_all_teams
+        Team.all.map{|team| puts "#{team.id}. #{team.name}" }
+    end
+
     def conference_standings_by_rank(conf_division)
         standings_hash = @@nba.make_api_request_get_json("/standings/standard/2019/conference/#{conf_division}")
         teams = standings_hash["api"]["standings"].select{|t|t["league"] == "standard"}
@@ -133,15 +139,6 @@ class CommandLineInterface
             puts "#{team['conference']['rank']}.#{get_team_name_by_id(team['teamId'])}  W: #{team['win']} L: #{team['loss'] }"
         end
         puts "\n\n"
-    end
-
-    
-    def display_all_teams
-        Team.all.map{|team| puts "#{team.id}. #{team.name}" }
-    end
-
-    def add_to_google_calendar
-
     end
 
     ### HELPER METHODS ###

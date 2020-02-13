@@ -27,6 +27,7 @@ class Team < ActiveRecord::Base
         next_five_games.each do |game|
             ap "#{game["vTeam"]["fullName"]} @ #{game["hTeam"]["fullName"]} #{game['startTimeUTC'].to_datetime.localtime("-05:00").strftime("%m/%d/%Y %I:%M %p")}"
         end
+        next_five_games
     end
 
     def leaders
