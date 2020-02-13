@@ -1,4 +1,5 @@
-require_relative '../config/environment'
+require_relative '../config/environment.rb'
 
+run_program = CommandLineInterface.new
+run_program.welcome
 
-welcome
