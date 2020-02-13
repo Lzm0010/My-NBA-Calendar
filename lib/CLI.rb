@@ -86,6 +86,7 @@ class CommandLineInterface
                 menu.choice '1.Last 5', "a"
                 menu.choice '2.Next 5', "b"
                 menu.choice '3.Add next 5 to my Google Calendar', "c"
+                menu.choice '4.Clear my Google Calendar', "d"
             end
 
             case choice
@@ -95,6 +96,8 @@ class CommandLineInterface
                 team.next_five
             when "c"
                 user.schedule_events_in_my_gcal(team)
+            when "d"
+                user.clear_calendar(team)
             end
 
         when 5

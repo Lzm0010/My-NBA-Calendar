@@ -19,6 +19,10 @@ class GoogleCalendar
     service.insert_event("41uih86oej4uhvbnaonesl0s3o@group.calendar.google.com", event)
   end
 
+  def delete_event(id)
+    service.delete_event("41uih86oej4uhvbnaonesl0s3o@group.calendar.google.com", id)
+  end
+
 
 private
 

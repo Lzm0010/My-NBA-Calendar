@@ -35,6 +35,7 @@ class User < ActiveRecord::Base
             event = Google::Apis::CalendarV3::Event.new(
                 summary: "#{game["vTeam"]["fullName"]} @ #{game["hTeam"]["fullName"]}",
                 location: 'My couch in front of the TV.',
+                description: "#{team.id}",
                 start: Google::Apis::CalendarV3::EventDateTime.new(
                 date_time: "#{game['startTimeUTC']}",
                 time_zone: 'America/New_York'
@@ -63,6 +64,14 @@ class User < ActiveRecord::Base
         end
     end
 
+    def clear_calendar(team)
+        @@my_cal.events.each do |event|
+            if event.description == "#{team.id}"
+                @@my_cal.delete_event(event.id)
+            end
+        end
+    end
+
     ### HELPER METHODS ###
 
     def get_team_id(prompt)
@@ -73,4 +82,5 @@ class User < ActiveRecord::Base
         end
         team_id
     end
+
 end
