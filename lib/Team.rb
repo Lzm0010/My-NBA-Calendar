@@ -32,6 +32,15 @@ class Team < ActiveRecord::Base
     def leaders
         self.players.each do |player|
             player_stats = @@nba.make_api_request_get_json("statistics/players/playerId/#{player.api_id}")
+            points = 0
+            assists = 0
+            rebounds = 0
+            player_stats["api"]["statistics"].last(10).each do |game| 
+                points += game["points"].to_i 
+                assists += game['assists'].to_i 
+                rebounds += game['totReb'].to_i
+            end
+            puts "#{player.name} is averaging #{points/10.0}ppg #{assists/10.0}apg & #{rebounds/10.0}rpg"
         end
     end
 
